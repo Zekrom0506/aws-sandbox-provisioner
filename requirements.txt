@@ -1,0 +1,2 @@
+# boto3 is already part of the Lambda Python runtime, so nothing extra is packaged.
+boto3>=1.34

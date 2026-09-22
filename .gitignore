@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+reports/
+
+# Terraform
+terraform/.terraform/
+terraform/build/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+terraform/backend.hcl
+tfplan
+tfplan.txt
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
