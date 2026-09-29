@@ -54,3 +54,12 @@ def test_non_manager_cannot_approve(pending_request, sent_slack_messages, starte
     assert started_provisioning == []
     assert "Only managers" in sent_slack_messages[0]["payload"]["text"]
 
+
+def test_double_click_only_provisions_once(pending_request, sent_slack_messages, started_provisioning):
+    request_id = pending_request["request_id"]
+    event = build_button_click_event("approve_sandbox", request_id, MANAGER_ID)
+
+    interactivity.lambda_handler(event, None)
+    interactivity.lambda_handler(event, None)
+
+    assert started_provisioning == [request_id]

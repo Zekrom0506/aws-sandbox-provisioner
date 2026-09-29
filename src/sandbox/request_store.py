@@ -71,3 +71,23 @@ def update_request(request_id, new_status, extra_fields=None):
         ExpressionAttributeValues=attribute_values,
     )
 
+
+def mark_pending_request_decided(request_id, new_status, manager_id):
+    """Only moves a request out of PENDING once, so a double click cannot provision twice."""
+    table = get_table()
+    try:
+        table.update_item(
+            Key={"request_id": request_id},
+            UpdateExpression="SET #status = :new_status, decided_by = :manager, updated_at = :now",
+            ConditionExpression="#status = :pending",
+            ExpressionAttributeNames={"#status": "status"},
+            ExpressionAttributeValues={
+                ":new_status": new_status,
+                ":manager": manager_id,
+                ":now": format_time(datetime.now(timezone.utc)),
+                ":pending": STATUS_PENDING,
+            },
+        )
+        return True
+    except table.meta.client.exceptions.ConditionalCheckFailedException:
+        return False

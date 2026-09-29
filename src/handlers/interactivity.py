@@ -56,7 +56,10 @@ def lambda_handler(event, context):
         logger.warning("Unknown action %s", action_id)
         return slack.build_http_response(400, {"error": "unknown action"})
 
-    request_store.update_request(request_id, new_status, {"decided_by": manager_id})
+    was_updated = request_store.mark_pending_request_decided(request_id, new_status, manager_id)
+    if not was_updated:
+        logger.info("Request %s was already decided", request_id)
+        return slack.build_http_response(200, {})
 
     request_item = request_store.get_request(request_id)
     requester_id = request_item["requester_id"]
