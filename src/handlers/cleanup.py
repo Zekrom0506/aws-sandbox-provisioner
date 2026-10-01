@@ -9,6 +9,10 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+def get_current_time():
+    return datetime.now(timezone.utc)
+
+
 def notify_owner(request_id):
     request_item = request_store.get_request(request_id)
     if request_item is None:
@@ -21,7 +25,7 @@ def notify_owner(request_id):
 
 
 def lambda_handler(event, context):
-    now = datetime.now(timezone.utc)
+    now = get_current_time()
     s3_client = boto3.client("s3")
     iam_client = boto3.client("iam")
 
