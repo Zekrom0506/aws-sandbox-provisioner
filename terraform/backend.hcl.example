@@ -1,0 +1,5 @@
+bucket         = "my-terraform-state-bucket"
+key            = "sandbox-provisioner/terraform.tfstate"
+region         = "ap-south-1"
+dynamodb_table = "terraform-locks"
+encrypt        = true

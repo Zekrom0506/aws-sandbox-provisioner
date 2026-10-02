@@ -1,0 +1,7 @@
+aws_region                = "ap-south-1"
+slack_approval_channel_id = "C0123456789"
+manager_slack_ids         = ["U0123456789"]
+
+# Keep secrets out of git. Export them instead:
+#   export TF_VAR_slack_signing_secret=...
+#   export TF_VAR_slack_bot_token=xoxb-...
