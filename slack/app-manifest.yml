@@ -1,0 +1,25 @@
+display_information:
+  name: Sandbox Provisioner
+  description: Request temporary AWS sandboxes from Slack
+features:
+  bot_user:
+    display_name: sandbox-bot
+    always_online: true
+  slash_commands:
+    - command: /sandbox
+      url: https://REPLACE_WITH_API_ID.execute-api.ap-south-1.amazonaws.com/slack/commands
+      description: Request a temporary AWS sandbox
+      usage_hint: "<hours> <reason>"
+      should_escape: false
+oauth_config:
+  scopes:
+    bot:
+      - commands
+      - chat:write
+      - im:write
+settings:
+  interactivity:
+    is_enabled: true
+    request_url: https://REPLACE_WITH_API_ID.execute-api.ap-south-1.amazonaws.com/slack/interactions
+  org_deploy_enabled: false
+  socket_mode_enabled: false
