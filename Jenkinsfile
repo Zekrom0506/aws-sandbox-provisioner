@@ -50,6 +50,16 @@ pipeline {
             }
         }
 
+        stage('Terraform format and validate') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform fmt -check -recursive'
+                    sh 'terraform init -input=false -backend=false'
+                    sh 'terraform validate'
+                }
+            }
+        }
+
         stage('Terraform plan') {
             steps {
                 withCredentials([
